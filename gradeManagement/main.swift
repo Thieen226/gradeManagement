@@ -29,14 +29,18 @@ catch{
 }
 
 //create variables
-var allGrades : Int = 0
-var avarageGrade : Double = 0.0
+var totalGrades : Int = 0
+var averageGrade : Double = 0.0
+var allGrades : [String] = []
+var numOfAssignment : Int = 0
 var lowestGrade : Int = 0
 var highestGrade : Int = 0
 var displayMenu = true
 
 while displayMenu{
-    print("1. Display grade of a single student \n"
+    print("Welcome to the Grade Manager! \n"
+        + "What would you like to do? (Enter the number): \n"
+        + "1. Display grade of a single student \n"
         + "2. Display all grades for a student \n"
         + "3. Display all grades for ALL students \n"
         + "4. Find the average grade of the class \n"
@@ -86,19 +90,43 @@ while displayMenu{
 func gradeOfOneStudent(){
     print("Which student would you like to choose?")
     
-    if var studentChosen = readLine(){
+    if let studentChosen = readLine(){
         
-        for i in studentNamesAndGrades.indices{
-            for j in 1..<studentNamesAndGrades.count{
-                if studentChosen == studentNamesAndGrades[i][0]{
-                    studentNamesAndGrades[i]
+        for names in studentNamesAndGrades.indices{
+            if studentChosen.lowercased() == studentNamesAndGrades[names][0].lowercased(){
+                for grades in 1..<studentNamesAndGrades[names].count{
+                    if let studentGrades = Int(studentNamesAndGrades[names][grades]){
+                        totalGrades += studentGrades
+                        numOfAssignment += 1
+                    }
                 }
+                averageGrade = Double(totalGrades/numOfAssignment)
+                print("\(studentChosen)'s grade in the class is \(averageGrade)")
+                return
             }
         }
+        print("Student not found!")
     }
 }
 
 func allGradesOfOneStudent(){
+    print("Which student would you like to choose?")
+    
+    if let studentChosen = readLine(){
+        
+        for names in studentNamesAndGrades.indices{
+            if studentChosen.lowercased() == studentNamesAndGrades[names][0].lowercased(){
+                for grades in 1..<studentNamesAndGrades[names].count{
+                        allGrades.append(studentNamesAndGrades[names][grades])
+                }
+                let showAllGrades = allGrades.joined(separator: ", ")
+                print("\(studentChosen).uppercased()'s grades in this class are: \n"
+                      + "\(showAllGrades)")
+                
+            }
+        }
+        
+    }
     
 }
 
