@@ -89,9 +89,7 @@ func gradeOfOneStudent(){
     if var studentChosen = readLine(){
         
         for i in studentNamesAndGrades.indices{
-            for j in studentNamesAndGrades[i].indices{
-                for(let j = 0; j < student.length; j++)
-                for(let j = 1; j < studdent.length; j++)
+            for j in 1..<studentNamesAndGrades.count{
                 if studentChosen == studentNamesAndGrades[i][0]{
                     studentNamesAndGrades[i]
                 }
