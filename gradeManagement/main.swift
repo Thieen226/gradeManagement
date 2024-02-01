@@ -61,7 +61,7 @@ while displayMenu{
             displayStudentGrades(showAverage: false)
             
         case "3":
-            allGradesOfAllStudents(showAverage: false)
+            allGradesOfAllStudents()
             
         case "4":
             averageGradeOfClass()
@@ -146,7 +146,7 @@ func displayStudentGrades(showAverage: Bool){
 }
 
 
-func allGradesOfAllStudents(showAverage: Bool){
+func allGradesOfAllStudents(){
     //use for loop to access each name and grade
     for names in studentNamesAndGrades.indices{
         let allNames = studentNamesAndGrades[names][0]
@@ -180,14 +180,17 @@ func averageGradeOfClass(){
 
 func averageOfAnAssignment(){
     print("Which assignment would you like to get the average of (1-10)")
-    if let userInput = readLine(){
+    if let userInput = readLine(), let assignmentNumber = Int(userInput), assignmentNumber > 0, assignmentNumber < 11{
         for grades in studentNamesAndGrades.indices{
-            let assignmentIndex = studentNamesAndGrades[grades][Int(userInput)!]
+            let assignmentIndex = studentNamesAndGrades[grades][assignmentNumber]
             totalGrades += Double(assignmentIndex)!
             numOfAssignment += 1
         }
         let averageAssignment = totalGrades/numOfAssignment
         print("The average for assignment #\(userInput) is " + String(format: "%.2f", (averageAssignment)))
+    }
+    else{
+        print("Please enter a correct assignment number!")
     }
 }
 
