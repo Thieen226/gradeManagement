@@ -113,9 +113,9 @@ func displayStudentGrades(showAverage: Bool){
                 for grades in 1..<studentNamesAndGrades[names].count{
                     
                     //create a variable that stores all the grades of the student
-                    if let studentGrades = Int(studentNamesAndGrades[names][grades]){
+                    if let studentGrades = Double(studentNamesAndGrades[names][grades]){
                         //add each grade together
-                        totalGrades += Double(studentGrades)
+                        totalGrades += studentGrades
                         
                         //this variable keeps track the num of assignemnts
                         //when the for loop goes through each grade, then add 1 to the variable
@@ -195,6 +195,16 @@ func averageOfAnAssignment(){
 }
 
 func lowestGradeOfClass(){
+    for names in studentNamesAndGrades.indices{
+        for grades in 1..<studentNamesAndGrades[names].count{
+            if let studentGrades = Double(studentNamesAndGrades[names][grades]){
+                totalGrades += studentGrades
+                numOfAssignment += 1
+            }
+            let averageGrades = totalGrades/numOfAssignment
+            print(averageGrades)
+        }
+    }
     
 }
 
