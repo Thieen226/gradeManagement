@@ -158,13 +158,19 @@ func allGradesOfAllStudents(showAverage: Bool){
 func averageGradeOfClass(){
     //reset variable for each student
     totalGrades = 0
+
+    //use for loop to access the names
+    //use second for loop to access the grades
     for names in studentNamesAndGrades.indices{
         for grades in 1..<studentNamesAndGrades[names].count{
+            //create a variable to store all the grades
             if let studentGrades = Int(studentNamesAndGrades[names][grades]){
-            totalGrades += studentGrades
+            //add all the grades together
+            totalGrades += Double(studentGrades)
             }
         }
     }
+    //create a variable to count all the students in the class
     let totalStudents = Double(studentNamesAndGrades.count)
     let averageClassGrade = totalGrades/totalStudents
     print("The class average is: \(averageClassGrade))
