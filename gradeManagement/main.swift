@@ -33,7 +33,7 @@ var totalGrades : Double = 0
 var averageGrade : Double = 0.0
 var studentNames : [String] = []
 var allGrades : [String] = []
-var numOfAssignment : Int = 0
+var numOfAssignment : Double = 0.0
 var lowestGrade : Int = 0
 var highestGrade : Int = 0
 var displayMenu = true
@@ -125,7 +125,7 @@ func displayStudentGrades(showAverage: Bool){
                         allGrades.append(studentNamesAndGrades[names][grades])
                     }
                 }
-                averageGrade = totalGrades/Double(numOfAssignment)
+                averageGrade = totalGrades/numOfAssignment
                 
                 //create a variable to store all the grades of a student
                 //then convert the array into a string and separate each grade with ,
@@ -158,26 +158,37 @@ func allGradesOfAllStudents(showAverage: Bool){
 func averageGradeOfClass(){
     //reset variable for each student
     totalGrades = 0
-
+    //create variable to keep track num of assn
+    //since when I print the totalNumOfAssignments, it's missing 1 assignment so I set it at 1.0
+    var totalNumOfAssignments : Double = 1.0
     //use for loop to access the names
     //use second for loop to access the grades
     for names in studentNamesAndGrades.indices{
         for grades in 1..<studentNamesAndGrades[names].count{
             //create a variable to store all the grades
             if let studentGrades = Int(studentNamesAndGrades[names][grades]){
-            //add all the grades together
-            totalGrades += Double(studentGrades)
+                //add all the grades together
+                totalGrades += Double(studentGrades)
+                totalNumOfAssignments += 1
             }
         }
     }
     //create a variable to count all the students in the class
-    let totalStudents = Double(studentNamesAndGrades.count)
-    let averageClassGrade = totalGrades/totalStudents
-    print("The class average is: \(averageClassGrade))
+    let averageClassGrade = totalGrades/totalNumOfAssignments
+    print("The class average is: " + String(format: "%.2f", averageClassGrade))
 }
 
 func averageOfAnAssignment(){
-    
+    print("Which assignment would you like to get the average of (1-10)")
+    if let userInput = readLine(){
+        for grades in studentNamesAndGrades.indices{
+            let assignmentIndex = studentNamesAndGrades[grades][Int(userInput)!]
+            totalGrades += Double(assignmentIndex)!
+            numOfAssignment += 1
+        }
+        let averageAssignment = totalGrades/numOfAssignment
+        print("The average for assignment #\(userInput) is " + String(format: "%.2f", (averageAssignment)))
+    }
 }
 
 func lowestGradeOfClass(){
