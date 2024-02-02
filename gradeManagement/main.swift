@@ -180,6 +180,9 @@ func averageGradeOfClass(){
 func averageOfAnAssignment(){
     print("Which assignment would you like to get the average of (1-10)")
     if let userInput = readLine(), let assignmentNumber = Int(userInput), assignmentNumber > 0, assignmentNumber < 11{
+        totalGrades = 0
+        numOfAssignment = 0
+        averageGrade = 0
         for grades in studentNamesAndGrades.indices{
             let assignmentIndex = studentNamesAndGrades[grades][assignmentNumber]
             totalGrades += Double(assignmentIndex)!
@@ -193,26 +196,61 @@ func averageOfAnAssignment(){
     }
 }
 
-func lowestGradeOfClass(){
+var namesAndAverage = [String:Double]()
+func calculateAverage() -> [String:Double]{
     for names in studentNamesAndGrades.indices{
-        for grades in 1..<studentNamesAndGrades[names].count{
-            if let studentGrades = Double(studentNamesAndGrades[names][grades]){
+        totalGrades = 0
+        numOfAssignment = 0
+        averageGrade = 0
+        for grade in 1..<studentNamesAndGrades[names].count{
+            if let studentGrades = Double(studentNamesAndGrades[names][grade]){
                 totalGrades += studentGrades
                 numOfAssignment += 1
+                averageGrade = totalGrades/Double(numOfAssignment)
             }
-            let averageGrades = totalGrades/numOfAssignment
-            print(averageGrades)
         }
+        namesAndAverage[studentNamesAndGrades[names][0]] = averageGrade
     }
-    
+    return namesAndAverage
+}
+
+
+func lowestGradeOfClass(){
+    let ave = calculateAverage()
+   if let studentsWithLowest = ave.min(by: {$0.value < $1.value}){
+        print("\(studentsWithLowest.key) is the student with the lowest grade: \(studentsWithLowest.value)")
+    }
 }
 
 func highestGradeOfClass(){
-    
+    let ave = calculateAverage()
+    if let studentsWithLowest = ave.max(by: {$0.value < $1.value}){
+        print("\(studentsWithLowest.key) is the student with the highest grade: \(studentsWithLowest.value)")
+    }
 }
 
 func filterByRange(){
-    
+    let ave = calculateAverage()
+    print(namesAndAverage)
+    print("Enter the low range you would like to use: ")
+    if let lowRangeInput = readLine(), let lowRange = Double(lowRangeInput){
+        
+        print("Enter the high range you would like to use: ")
+        if let highRangeInput = readLine(), let highRange = Double(highRangeInput){
+            
+            let studentGradesRange = ave.filter({$0.value > lowRange && $0.value < highRange})
+            for students in studentGradesRange{
+                print("\(students.key): \(students.value)")
+            }
+        }
+        else{
+            print("Enter a number!")
+        }
+    }
+    else{
+        print("Enter")
+    }
+
 }
 
 
