@@ -148,6 +148,7 @@ func allGradesOfAllStudents(){
     //use for loop to access each name and grade
     for names in studentNamesAndGrades.indices{
         let allNames = studentNamesAndGrades[names][0]
+        //store the names and grades in a sentence
         let allGrades = studentNamesAndGrades[names][1...].joined(separator: ", ")
         print("\(allNames) grades are: \(allGrades)")
     }
