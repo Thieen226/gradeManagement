@@ -34,8 +34,6 @@ var averageGrade : Double = 0.0
 var studentNames : [String] = []
 var allGrades : [String] = []
 var numOfAssignment : Double = 0.0
-var lowestGrade : Int = 0
-var highestGrade : Int = 0
 var displayMenu = true
 
 //when displayMenu is true, keeps showing the menu options
