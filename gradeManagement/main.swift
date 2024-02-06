@@ -144,7 +144,6 @@ func displayStudentGrades(showAverage: Bool){
     }
 }
 
-
 func allGradesOfAllStudents(){
     //use for loop to access each name and grade
     for names in studentNamesAndGrades.indices{
@@ -180,15 +179,18 @@ func averageGradeOfClass(){
 
 func averageOfAnAssignment(){
     print("Which assignment would you like to get the average of (1-10)")
+    //grab the assignment number and not letting the user choose any number less than 0 and greater than 10
     if let userInput = readLine(), let assignmentNumber = Int(userInput), assignmentNumber > 0, assignmentNumber < 11{
         totalGrades = 0
         numOfAssignment = 0
         averageGrade = 0
+        //for loop to access the assignemnt index
         for grades in studentNamesAndGrades.indices{
             let assignmentIndex = studentNamesAndGrades[grades][assignmentNumber]
             totalGrades += Double(assignmentIndex)!
             numOfAssignment += 1
         }
+        //calculate average and round it to 2 decimals
         let averageAssignment = totalGrades/numOfAssignment
         print("The average for assignment #\(userInput) is " + String(format: "%.2f", (averageAssignment)))
     }
@@ -197,18 +199,21 @@ func averageOfAnAssignment(){
     }
 }
 
+//create a func to calculate average grades of each student and add it to dictionary
 func calculateAverage() -> [String:Double]{
     for names in studentNamesAndGrades.indices{
         totalGrades = 0
         numOfAssignment = 0
         averageGrade = 0.0
         for grade in 1..<studentNamesAndGrades[names].count{
+            //grab all the grades of student and calculate the average
             if let studentGrades = Double(studentNamesAndGrades[names][grade]){
                 totalGrades += studentGrades
                 numOfAssignment += 1
                 averageGrade = totalGrades/Double(numOfAssignment)
             }
         }
+        //adding it to the dictionary
         namesAndAverage[studentNamesAndGrades[names][0]] = averageGrade
     }
     return namesAndAverage
@@ -217,13 +222,16 @@ func calculateAverage() -> [String:Double]{
 
 func lowestGradeOfClass(){
     let ave = calculateAverage()
+    //find the min value in the dictionary
    if let studentsWithLowest = ave.min(by: {$0.value < $1.value}){
+       //print the name and grade of the student
         print("\(studentsWithLowest.key) is the student with the lowest grade: \(studentsWithLowest.value)")
     }
 }
 
 func highestGradeOfClass(){
     let ave = calculateAverage()
+    //find the max value in the dictionary
     if let studentsWithLowest = ave.max(by: {$0.value < $1.value}){
         print("\(studentsWithLowest.key) is the student with the highest grade: \(studentsWithLowest.value)")
     }
@@ -232,12 +240,18 @@ func highestGradeOfClass(){
 func filterByRange(){
     let ave = calculateAverage()
     print("Enter the low range you would like to use: ")
+    //grab the low range number
     if let lowRangeInput = readLine(), let lowRange = Double(lowRangeInput){
         
         print("Enter the high range you would like to use: ")
+        
+        //grab the high range number
         if let highRangeInput = readLine(), let highRange = Double(highRangeInput){
             
+            //then use filter to find the range of the desired grades in the dictionary
             let studentGradesRange = ave.filter({$0.value > lowRange && $0.value < highRange})
+            
+            //find the students within the range and print their names and grades
             for students in studentGradesRange{
                 print("\(students.key): \(students.value)")
             }
