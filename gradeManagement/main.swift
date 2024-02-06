@@ -35,6 +35,7 @@ var studentNames : [String] = []
 var allGrades : [String] = []
 var numOfAssignment : Double = 0.0
 var displayMenu = true
+var namesAndAverage = [String:Double]()
 
 //when displayMenu is true, keeps showing the menu options
 while displayMenu{
@@ -196,12 +197,11 @@ func averageOfAnAssignment(){
     }
 }
 
-var namesAndAverage = [String:Double]()
 func calculateAverage() -> [String:Double]{
     for names in studentNamesAndGrades.indices{
         totalGrades = 0
         numOfAssignment = 0
-        averageGrade = 0
+        averageGrade = 0.0
         for grade in 1..<studentNamesAndGrades[names].count{
             if let studentGrades = Double(studentNamesAndGrades[names][grade]){
                 totalGrades += studentGrades
@@ -231,7 +231,6 @@ func highestGradeOfClass(){
 
 func filterByRange(){
     let ave = calculateAverage()
-    print(namesAndAverage)
     print("Enter the low range you would like to use: ")
     if let lowRangeInput = readLine(), let lowRange = Double(lowRangeInput){
         
@@ -248,7 +247,7 @@ func filterByRange(){
         }
     }
     else{
-        print("Enter")
+        print("Enter a number!")
     }
 
 }
